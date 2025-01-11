@@ -1,0 +1,136 @@
+
+.content-page {
+    padding: 20px;
+    flex-direction: column;
+    position: relative;
+
+    .search-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+  
+      .search-bar {
+        width: 100%;
+      }
+  
+      .filters {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+  
+        mat-chip {
+          background-color: #f1f1f1;
+          color: #333;
+          cursor: pointer;
+  
+          &:last-child {
+            color: red;
+          }
+        }
+      }
+    }
+  
+    .main-section {
+      display: flex;
+      gap: 20px;
+  
+      .categories {
+        flex: 1;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+  
+        h3 {
+          margin-bottom: 15px;
+        }
+      }
+  
+      .items {
+        flex: 3;
+  
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+        }
+  
+        .item-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 15px;
+  
+          .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 15px;
+  
+            img {
+              width: 100%;
+              height: 120px;
+              object-fit: cover;
+              border-radius: 10px;
+            }
+  
+            .card-content {
+              h5 {
+                margin: 10px 0;
+                font-size: 16px;
+                font-weight: bold;
+              }
+  
+              p {
+                margin: 0;
+  
+                &.status {
+                  color: red;
+                  font-size: 12px;
+                  margin-top: 5px;
+                }
+              }
+            }
+  
+            &.out-of-stock {
+              opacity: 0.6;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+/* Sort panel styles */
+.sort-panel {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background: #f9f9f9;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+.sort-panel.open {
+  right: 0; 
+}
+
+.sort-panel h3 {
+  margin-bottom: 20px;
+}
+
+.sort-panel .sort-options label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.sort-panel .actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}

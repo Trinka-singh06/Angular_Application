@@ -1,0 +1,101 @@
+<div class="content-page">
+  <div class="search-section">
+    <h2>Search</h2>
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Search for items" />
+      <button mat-icon-button matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="filters">
+      <span>Applied Filters:</span>
+      <mat-chip-list>
+        <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)">
+          {{ filter }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div *ngIf="selectedCategory" class="selected-category">
+      <h4>Selected Category: {{ selectedCategory }}</h4>
+    </div>
+  </div>
+
+  <div class="main-section">
+    <div class="categories">
+      <h3>Categories</h3>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('e-Voucher')">
+          <mat-panel-title>e-products</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('Products')">
+          <mat-panel-title>Home & Kitchen</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('Fashion & Retails')">
+          <mat-panel-title>Fashion & Retails</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('Books')">
+          <mat-panel-title>e-Books</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('Toys')">
+          <mat-panel-title>Toys</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="selectCategory('Gifts')">
+          <mat-panel-title>Gift Cards</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </div>
+
+    <div class="items">
+      <div class="header">
+        <h4>{{ sortedItems.length }} results found</h4>
+        <button mat-raised-button color="primary" (click)="toggleSortPanel()">Sort</button>
+      </div>
+      <div class="item-list">
+        <div class="card" *ngFor="let item of sortedItems" [ngClass]="{ 'out-of-stock': item.quantity === 0 }">
+          <img [src]="item.display_img_url || 'assets/placeholder.png'" alt="Item Image" />
+          <div class="card-content">
+            <h5>{{ item.name }}</h5>
+            <p>{{ item.points }} Points</p>
+            <p *ngIf="item.quantity === 0" class="status">Out of Stock</p>
+            <p *ngIf="item.quantity && item.quantity <= lowQuantity" class="status">
+              ON High Demand (Only {{ item.quantity }} rewards left)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-paginator [length]="sortedItems.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+  <!-- Right-side sorting panel -->
+  <div class="sort-panel" [ngClass]="{ open: isSortPanelOpen }">
+    <h3>Filter By</h3>
+    <div class="sort-options">
+      <label>
+        <input type="radio" name="sortOrder" value="asc" [(ngModel)]="sortOrder" />
+        Name (A to Z)
+      </label>
+      <label>
+        <input type="radio" name="sortOrder" value="desc" [(ngModel)]="sortOrder" />
+        Name (Z to A)
+      </label>
+    </div>
+    <div class="actions">
+      <button mat-raised-button color="warn" (click)="resetSort()">Reset All</button>
+      <button mat-raised-button color="primary" (click)="applySort()">Apply</button>
+    </div>
+  </div>
+</div>
